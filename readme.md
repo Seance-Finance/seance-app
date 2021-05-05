@@ -1,4 +1,5 @@
-# Beefy Finance (\$BIFI)
+# Seance Finance
+Forked and inspired by the folks from Beefy Finance. Respect.
 
 ## Overview
 
