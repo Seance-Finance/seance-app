@@ -9,29 +9,35 @@ const NetworksProvider = ({ children }) => {
 
   const networks = [
     {
-      name: 'BSC',
-      asset: 'BNB',
-      id: '56',
+      name: 'Fantom Opera',
+      asset: 'FANTOM',
+      id: '250',
       url: 'https://app.seance.finance',
     },
-    {
-      name: 'HECO',
-      asset: 'HT',
-      id: '128',
-      url: 'https://heco.seance.finance',
-    },
-    {
-      name: 'AVALANCHE',
-      asset: 'AVAX',
-      id: '43114',
-      url: 'https://avax.seance.finance',
-    },
-    {
-      name: 'POLYGON',
-      asset: 'POLYGON',
-      id: '137',
-      url: 'https://polygon.seance.finance',
-    },
+    // {
+    //   name: 'BSC',
+    //   asset: 'BNB',
+    //   id: '56',
+    //   url: 'https://bsc.seance.finance',
+    // },
+    // {
+    //   name: 'HECO',
+    //   asset: 'HT',
+    //   id: '128',
+    //   url: 'https://heco.beefy.finance',
+    // },
+    // {
+    //   name: 'AVALANCHE',
+    //   asset: 'AVAX',
+    //   id: '43114',
+    //   url: 'https://avax.beefy.finance',
+    // },
+    // {
+    //   name: 'POLYGON',
+    //   asset: 'POLYGON',
+    //   id: '137',
+    //   url: 'https://polygon.beefy.finance',
+    // },
   ];
 
   const currentNetwork = useMemo(

@@ -54,7 +54,7 @@ export function connectWallet(web3Modal) {
       let networkId = await web3.eth.getChainId();
       if (networkId === 86) {
         // Trust provider returns an incorrect chainId for BSC.
-        networkId = 56;
+        networkId = 250;
       }
 
       dispatch({ type: HOME_CONNECT_WALLET_SUCCESS, data: { web3, address, networkId } });
