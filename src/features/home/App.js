@@ -60,7 +60,7 @@ export default function App({ children }) {
       Boolean(networkId !== Number(process.env.REACT_APP_NETWORK_ID))
     ) {
       networkSetup(process.env.REACT_APP_NETWORK_ID).catch(e => {
-        console.error(e);
+        console.error('Network setup error', e);
         alert(t('Network-Error'));
       });
     }
@@ -97,8 +97,7 @@ export default function App({ children }) {
                 </div>
               </div>
 
-              <Footer />
-              <Pastures />
+              {/* <Footer /> TODO: Implement when underlying links have been set up */}
             </div>
           </NetworksProvider>
         </SnackbarProvider>
