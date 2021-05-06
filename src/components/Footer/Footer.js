@@ -35,7 +35,7 @@ const Footer = () => {
         </a>
 
         <a
-          href="https://github.com/beefyfinance"
+          href="https://github.com/Seance-Finance/seance-app"
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
