@@ -12,25 +12,25 @@ const NetworksProvider = ({ children }) => {
       name: 'BSC',
       asset: 'BNB',
       id: '56',
-      url: 'https://app.beefy.finance',
+      url: 'https://app.seance.finance',
     },
     {
       name: 'HECO',
       asset: 'HT',
       id: '128',
-      url: 'https://heco.beefy.finance',
+      url: 'https://heco.seance.finance',
     },
     {
       name: 'AVALANCHE',
       asset: 'AVAX',
       id: '43114',
-      url: 'https://avax.beefy.finance',
+      url: 'https://avax.seance.finance',
     },
     {
       name: 'POLYGON',
       asset: 'POLYGON',
       id: '137',
-      url: 'https://polygon.beefy.finance',
+      url: 'https://polygon.seance.finance',
     },
   ];
 

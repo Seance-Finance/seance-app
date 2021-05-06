@@ -1,9 +1,10 @@
 # Seance Finance
+
 Forked and inspired by the folks from Beefy Finance. Respect.
 
 ## Overview
 
-Official frontend repo of [beefy.finance](https://app.beefy.finance). Multichain yield farming optimizer.
+Official frontend repo of seance.finance. Fantom yield farming optimizer.
 
 ## Env
 
@@ -24,7 +25,7 @@ The app will be running at http://localhost:3000/
 
 ## Contribute
 
-Beefy.Finance exists thanks to its contributors. There are many ways you can participate and help build high quality software. Check out the [contribution guide](CONTRIBUTING.md)!
+Seance.Finance exists thanks to its contributors. There are many ways you can participate and help build high quality software. Check out the [contribution guide](CONTRIBUTING.md)!
 
 ## License
 

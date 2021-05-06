@@ -36,7 +36,7 @@ const Header = ({ links, isNightMode, setNightMode }) => {
               height={'40px'}
               className={classes.logo}
             />
-            beefy.finance
+            seance.finance
           </Hidden>
           <Hidden smUp>
             <img
@@ -141,7 +141,7 @@ const LinkSidebar = ({ name, label, icon, classes }) => (
 const getLinkUrl = name => {
   return name === 'buy'
     ? 'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/BIFI/?network=56'
-    : `https://${name}.beefy.finance`;
+    : `https://${name}.beefy.finance`; // TODO: change to .seance.finance when site is live
 };
 
 export default Header;

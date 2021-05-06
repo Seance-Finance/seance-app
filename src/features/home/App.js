@@ -97,7 +97,7 @@ export default function App({ children }) {
                 </div>
               </div>
 
-              <Footer />
+              {/* <Footer /> TODO: Implement when underlying links have been set up */}
               <Pastures />
             </div>
           </NetworksProvider>
