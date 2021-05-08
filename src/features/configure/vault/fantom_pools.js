@@ -1,7 +1,7 @@
 export const fantomPools = [
   {
     id: 'spirit-wftm-usdc',
-    logo: 'busd-pairs/USDC-BUSD.svg',
+    logo: 'busd-pairs/USDC-BUSD.svg', // TODO: change
     name: 'WFTM-USDC LP',
     token: 'WFTM-USDC LP',
     tokenDescription: 'Spiritswap',
