@@ -48,10 +48,21 @@ const networkSettings = {
     chainName: 'Fantom Opera',
     nativeCurrency: {
       name: 'FANTOM',
-      symbol: 'FANTOM',
+      symbol: 'FTM',
       decimals: 18,
     },
     rpcUrls: ['https://rpcapi.fantom.network'],
+    blockExplorerUrls: ['https://ftmscan.com/'],
+  },
+  '0xfa2': {
+    chainId: `0xfa2`,
+    chainName: 'Fantom testnet',
+    nativeCurrency: {
+      name: 'FANTOM',
+      symbol: 'FTM',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc.testnet.fantom.network/'],
     blockExplorerUrls: ['https://ftmscan.com/'],
   },
 };

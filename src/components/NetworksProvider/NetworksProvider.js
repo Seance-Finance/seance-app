@@ -15,6 +15,12 @@ const NetworksProvider = ({ children }) => {
       url: 'https://app.seance.finance',
     },
     // {
+    //   name: 'Fantom testnet',
+    //   asset: 'FANTOM',
+    //   id: '0xfa2',
+    //   url: 'https://app.seance.finance',
+    // }, -> Uncomment when developing on testnet
+    // {
     //   name: 'BSC',
     //   asset: 'BNB',
     //   id: '56',

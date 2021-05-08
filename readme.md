@@ -11,7 +11,7 @@ Official frontend repo of seance.finance. Fantom yield farming optimizer.
 Required env vars:
 
 ```
-REACT_APP_NETWORK_ID = 56 // Network ID of BSC
+REACT_APP_NETWORK_ID = 250 // Network ID of FTM
 ```
 
 ## To Run
