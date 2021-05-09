@@ -25,6 +25,7 @@ export const getNetworkPools = () => {
     case '137':
       return polygonPools;
     case '250':
+      return fantomPools;
     case '0xfa2': // fantom test network
       return fantomPools;
     default:
@@ -43,6 +44,7 @@ export const getNetworkStakePools = () => {
     case '137':
       return polygonStakePools;
     case '250':
+      return fantomStakePools;
     case '0xfa2':
       return fantomStakePools;
     default:
@@ -246,8 +248,8 @@ export const getNetworkConnectors = t => {
             package: WalletConnectProvider,
             options: {
               rpc: {
-                1: 'https://rpcapi.fantom.network',
-                250: 'https://rpcapi.fantom.network',
+                1: 'https://rpc.fantom.network',
+                250: 'https://rpc.fantom.network',
               },
             },
           },
