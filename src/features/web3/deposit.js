@@ -9,32 +9,32 @@ export const deposit = async ({ web3, address, isAll, amount, contractAddress, d
 
 const _deposit = ({ web3, contract, amount, isAll, address, dispatch }) => {
   return new Promise((resolve, reject) => {
-    if (isAll) {
-      contract.methods
-        .depositAll()
-        .send({ from: address })
-        .on('transactionHash', function (hash) {
-          dispatch(
-            enqueueSnackbar({
-              message: hash,
-              options: {
-                key: new Date().getTime() + Math.random(),
-                variant: 'success',
-              },
-              hash,
-            })
-          );
-        })
-        .on('receipt', function (receipt) {
-          resolve();
-        })
-        .on('error', function (error) {
-          reject(error);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    } else {
+    // if (isAll) {
+    //   contract.methods
+    //     .depositAll()
+    //     .send({ from: address })
+    //     .on('transactionHash', function (hash) {
+    //       dispatch(
+    //         enqueueSnackbar({
+    //           message: hash,
+    //           options: {
+    //             key: new Date().getTime() + Math.random(),
+    //             variant: 'success',
+    //           },
+    //           hash,
+    //         })
+    //       );
+    //     })
+    //     .on('receipt', function (receipt) {
+    //       resolve();
+    //     })
+    //     .on('error', function (error) {
+    //       reject(error);
+    //     })
+    //     .catch(error => {
+    //       reject(error);
+    //     });
+    // } else {
       contract.methods
         .deposit(amount)
         .send({ from: address })
@@ -63,6 +63,6 @@ const _deposit = ({ web3, contract, amount, isAll, address, dispatch }) => {
           console.log(error);
           reject(error);
         });
-    }
+    // }
   });
 };

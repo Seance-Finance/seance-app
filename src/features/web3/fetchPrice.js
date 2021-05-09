@@ -53,23 +53,23 @@ const fetchCoingecko = async ids => {
 };
 
 const fetchTokens = async () => {
-  try {
-    const response = await axios.get(`https://api.beefy.finance/prices?_=1619766668`);
-    return response.data;
-  } catch (err) {
-    console.error(err);
+  // try {
+  //   const response = await axios.get(`https://api.beefy.finance/prices?_=1619766668`);
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
     return {};
-  }
+  // }
 };
 
 const fetchLPs = async () => {
-  try {
-    const response = await axios.get(`https://api.beefy.finance/lps?_=1619766668`);
-    return response.data;
-  } catch (err) {
-    console.error(err);
+  // try {
+  //   const response = await axios.get(`https://api.beefy.finance/lps?_=1619766668`);
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
     return {};
-  }
+  // }
 };
 
 const oracleEndpoints = {
