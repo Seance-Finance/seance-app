@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Cow = ({ total, index }) => {
+const Fiend = ({ total, index }) => {
   const [dimensions, setDimensions] = useState(null);
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const Cow = ({ total, index }) => {
 
   return (
     <img
-      alt="cow"
-      src={require('assets/img/beefy.svg')}
+      alt="Fiend"
+      src={require('assets/img/logo-mascot.svg')}
       style={{
         position: 'absolute',
         bottom: `${dimensions.y}rem`,
@@ -31,4 +31,4 @@ const Cow = ({ total, index }) => {
   );
 };
 
-export default Cow;
+export default Fiend;
