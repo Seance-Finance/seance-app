@@ -31,18 +31,17 @@ const Header = ({ links, isNightMode, setNightMode }) => {
         <Button href="/" className={classes.title}>
           <Hidden xsDown>
             <img
-              alt="BIFI"
-              src={require(`images/single-assets/BIFI.svg`)}
-              height={'40px'}
+              alt="SEANCE"
+              src={require(`images/seance/logo-mascot-name.svg`)}
+              height={'250px'}
               className={classes.logo}
             />
-            seance.finance
           </Hidden>
           <Hidden smUp>
             <img
-              alt="BIFI"
-              src={require(`images/single-assets/BIFI.svg`)}
-              height={'35px'}
+              alt="SEANCE"
+              src={require(`images/seance/logo-mascot-name.svg`)}
+              height={'100px'}
               className={classes.logo}
             />
           </Hidden>

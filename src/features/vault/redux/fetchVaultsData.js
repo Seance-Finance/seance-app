@@ -1,21 +1,19 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import { MultiCall } from 'eth-multicall';
 import {
   VAULT_FETCH_VAULTS_DATA_BEGIN,
   VAULT_FETCH_VAULTS_DATA_SUCCESS,
   VAULT_FETCH_VAULTS_DATA_FAILURE,
 } from './constants';
-import { fetchPrice, whenPricesLoaded } from '../../web3';
+import { fetchPrice } from '../../web3';
 import { erc20ABI, vaultABI } from '../../configure';
 import { byDecimals } from 'features/helpers/bignumber';
-import { getNetworkMulticall } from 'features/helpers/getNetworkData';
 import Web3 from 'web3';
 import { getRpcUrl } from 'common/networkSetup';
 
 export function fetchVaultsData({ address, web3, pools }) {
-  return dispatch => {
+  return async dispatch => {
     dispatch({
       type: VAULT_FETCH_VAULTS_DATA_BEGIN,
     });
@@ -26,53 +24,42 @@ export function fetchVaultsData({ address, web3, pools }) {
     }
 
     const promise = new Promise((resolve, reject) => {
-      const multicall = new MultiCall(web3, getNetworkMulticall());
+      Promise.all(
+        pools.map(async pool => {
+          const token = await new web3.eth.Contract(erc20ABI, pool.tokenAddress);
 
-      let tokenCalls = [];
-      if (address) { // can only fetch allowances if a wallet is connected
-        tokenCalls = pools.map(pool => {
-          const bnbShimAddress = '0xC72E5edaE5D7bA628A2Acb39C8Aa0dbbD06daacF';
-          const token = new web3.eth.Contract(erc20ABI, pool.tokenAddress || bnbShimAddress);
-          return {
-            allowance: token.methods.allowance(address, pool.earnContractAddress),
-          };
-        });
-      }
+          if (address) {
+            const allowanceWei = await token.methods
+              .allowance(address, pool.earnContractAddress)
+              .call();
+            pool.allowance =
+              new BigNumber(web3.utils.fromWei(allowanceWei, 'ether')).toNumber() || 0;
+          }
 
-      const vaultCalls = pools.map(pool => {
-        const vault = new web3.eth.Contract(vaultABI, pool.earnedTokenAddress);
-        return {
-          pricePerFullShare: vault.methods.getPricePerFullShare(),
-          tvl: vault.methods.balance(),
-        };
-      });
+          const vault = await new web3.eth.Contract(vaultABI, pool.earnedTokenAddress);
 
-      Promise.all([
-        multicall.all([tokenCalls]).then(result => result[0]),
-        multicall.all([vaultCalls]).then(result => result[0]),
-        whenPricesLoaded() // need to wait until prices are loaded in cache
-      ]).then(data => {
-        const newPools = pools.map((pool, i) => {
-          const allowance = data[0][1] ? web3.utils.fromWei(data[0][i].allowance, 'ether') : 0;
-          const pricePerFullShare = byDecimals(data[1][i].pricePerFullShare, 18).toNumber();
-          return {
-            ...pool,
-            allowance: new BigNumber(allowance).toNumber() || 0,
-            pricePerFullShare: new BigNumber(pricePerFullShare).toNumber() || 1,
-            tvl: byDecimals(data[1][i].tvl, 18).toNumber(),
-            oraclePrice: fetchPrice({ id: pool.oracleId }) || 0,
-          };
-        });
-        dispatch({
-          type: VAULT_FETCH_VAULTS_DATA_SUCCESS,
-          data: newPools,
-        });
-        resolve();
-      }).catch(error => {
-        dispatch({
-          type: VAULT_FETCH_VAULTS_DATA_FAILURE,
-        });
-        reject(error.message || error);
+          const pricePerFullShare = await vault.methods.getPricePerFullShare().call();
+          pool.pricePerFullShare = new BigNumber(byDecimals(pricePerFullShare, 18)).toNumber() || 1;
+          const tvl = await vault.methods.underlyingBalanceInVault().call();
+          pool.tvl = byDecimals(tvl, 18).toNumber();
+
+          pool.oraclePrice = fetchPrice({ id: pool.oracleId }) || 0;
+
+          return pool;
+        })
+      ).then(newPools => {
+        try {
+          dispatch({
+            type: VAULT_FETCH_VAULTS_DATA_SUCCESS,
+            data: newPools,
+          });
+          resolve();
+        } catch (error) {
+          dispatch({
+            type: VAULT_FETCH_VAULTS_DATA_FAILURE,
+          });
+          reject(error.message || error);
+        }
       });
     });
 
