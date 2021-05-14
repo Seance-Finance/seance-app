@@ -89,6 +89,8 @@ export const getNetworkMulticall = () => {
       return '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76';
     case '137':
       return '0xC3821F0b56FA4F4794d5d760f94B812DE261361B';
+    case '250':
+      return '0x63B8310c5093ac917552931D8b15d5AB6945c0a6';
     default:
       return '';
   }
