@@ -24,12 +24,7 @@ export const useStyles = makeStyles(theme =>
       width: 48,
     },
     popover: {
-      [theme.breakpoints.up('sm')]: {
-        marginTop: 12,
-      },
-      [theme.breakpoints.down('xs')]: {
-        marginTop: -12,
-      },
+      marginTop: 12,
     },
     paper: { backgroundColor: theme.palette.background.paper, width: 130 },
     listItem: {
