@@ -1,146 +1,27 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import Menu from '@material-ui/icons/Menu';
-import Close from '@material-ui/icons/Close';
-import WbSunny from '@material-ui/icons/WbSunny';
-import NightsStay from '@material-ui/icons/NightsStay';
-
+import { AppBar, Button, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import HomePageActions from '../HomePageActions/HomePageActions';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Header = ({ links, isNightMode, setNightMode }) => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+const Header = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const isSmallScreen = useMediaQuery(useTheme().breakpoints.down('xs'));
 
   return (
-    <AppBar className={`${classes.appBar} ${classes.dark}`}>
-      <Toolbar className={classes.container}>
-        <Button href="/" className={classes.title}>
-          <Hidden xsDown>
-            <img
-              alt="SEANCE"
-              src={require(`images/seance/logo-mascot-name.svg`)}
-              height={'250px'}
-              className={classes.logo}
-            />
-          </Hidden>
-          <Hidden smUp>
-            <img
-              alt="SEANCE"
-              src={require(`images/seance/logo-mascot-name.svg`)}
-              height={'100px'}
-              className={classes.logo}
-            />
-          </Hidden>
-        </Button>
+    <AppBar className={classes.appBar}>
+      <Button href="/" className={classes.title}>
+        <img
+          alt="SEANCE"
+          src={require(`images/seance/logo-mascot-name.svg`)}
+          height={isSmallScreen ? 100 : 250}
+        />
+      </Button>
 
-        <div className={classes.middleNav}>
-          <Hidden smDown>
-            {Number(process.env.REACT_APP_NETWORK_ID) === 56 &&
-              renderLink('barn', 'barn', 'warehouse', classes)}
-            {renderLink('vote', 'vote', 'vote-yea', classes)}
-            {renderLink('dashboard', t('stats'), 'chart-bar', classes)}
-            {renderLink('docs', 'docs', 'book', classes)}
-          </Hidden>
-          {renderLink('buy', t('buy'), 'dollar-sign', classes)}
-          {renderBoost(classes)}
-        </div>
-
-        <Hidden smDown implementation="css">
-          <div className={classes.collapse}>{links}</div>
-        </Hidden>
-        <Hidden mdUp>
-          <IconButton
-            className={classes.iconButton}
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
-      </Toolbar>
-
-      <Hidden mdUp implementation="js">
-        <Drawer
-          variant="temporary"
-          anchor={'right'}
-          open={mobileOpen}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          onClose={handleDrawerToggle}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-            className={classes.closeButtonDrawer}
-          >
-            <Close />
-          </IconButton>
-          <div className={classes.appResponsive}>{links}</div>
-          <div style={{ textAlign: 'center' }}>
-            {Number(process.env.REACT_APP_NETWORK_ID) === 56 && (
-              <LinkSidebar name="barn" label="barn" icon="warehouse" classes={classes} />
-            )}
-            <LinkSidebar name="vote" label="vote" icon="vote-yea" classes={classes} />
-            <LinkSidebar name="dashboard" label={t('stats')} icon="chart-bar" classes={classes} />
-            <LinkSidebar name="docs" label="docs" icon="book" classes={classes} />
-            <LinkSidebar name="buy" label={t('buy')} icon="dollar-sign" classes={classes} />
-            <IconButton onClick={setNightMode} className={classes.icon}>
-              {isNightMode ? <WbSunny /> : <NightsStay />}
-            </IconButton>
-          </div>
-        </Drawer>
-      </Hidden>
+      <HomePageActions />
     </AppBar>
   );
-};
-
-const renderLink = (name, label, icon, classes) => {
-  return (
-    <a
-      href={getLinkUrl(name)}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={classes.link}
-      style={{ marginLeft: '5px', marginRight: '5px' }}
-    >
-      <i className={`fas fa-${icon} ${classes.icon}`} />
-      <span>{label}</span>
-    </a>
-  );
-};
-
-const renderBoost = classes => {
-  return (
-    <a className={classes.btnBoost} href="/stake">
-      <img alt="Boost" src={require('images/stake/boost.svg')} />
-    </a>
-  );
-};
-
-const LinkSidebar = ({ name, label, icon, classes }) => (
-  <div style={{ width: '100%', paddingTop: '10px' }}>{renderLink(name, label, icon, classes)}</div>
-);
-
-const getLinkUrl = name => {
-  return name === 'buy'
-    ? 'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/BIFI/?network=56'
-    : `https://${name}.beefy.finance`; // TODO: change to .seance.finance when site is live
 };
 
 export default Header;
