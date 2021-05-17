@@ -9,7 +9,7 @@ const styles = theme => ({
   section: {
     backgroundColor: theme.palette.background.section,
     border: '1px solid ' + theme.palette.background.border,
-    padding: 16,
+    padding: 26,
     width: '100%',
     borderRadius: 20,
     display: 'flex',
