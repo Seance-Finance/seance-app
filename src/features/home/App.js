@@ -3,7 +3,6 @@ import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from 'components/Header/Header';
-import HeaderLinks from 'components/HeaderLinks/HeaderLinks';
 import NetworksProvider from 'components/NetworksProvider/NetworksProvider';
 import NetworksModal from 'components/NetworksModal/NetworksModal';
 
@@ -12,8 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { SnackbarProvider } from 'notistack';
 import { Notifier } from 'features/common';
 
-import Footer from 'components/Footer/Footer';
-import Pastures from 'components/Pastures/Pastures';
 import appStyle from './jss/appStyle.js';
 
 import { createWeb3Modal } from '../web3';
@@ -21,20 +18,15 @@ import { useConnectWallet, useDisconnectWallet } from './redux/hooks';
 import useNightMode from './hooks/useNightMode';
 import createTheme from './jss/appTheme';
 import { networkSetup } from 'common/networkSetup';
+import { AppContext } from './context';
 
 const useStyles = makeStyles(appStyle);
 
 export default function App({ children }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const {
-    connectWallet,
-    web3,
-    address,
-    networkId,
-    connected,
-    connectWalletPending,
-  } = useConnectWallet();
+  const { connectWallet, web3, address, networkId, connected, connectWalletPending } =
+    useConnectWallet();
   const { disconnectWallet } = useDisconnectWallet();
   const [web3Modal, setModal] = useState(null);
 
@@ -72,33 +64,31 @@ export default function App({ children }) {
         <SnackbarProvider>
           <NetworksProvider>
             <NetworksModal />
-            <div
-              className={classes.page}
-              style={{ backgroundColor: theme.palette.background.default }}
+            <AppContext.Provider
+              value={{
+                address,
+                connectWallet: () => connectWallet(web3Modal),
+                disconnectWallet: () => disconnectWallet(web3, web3Modal),
+                connected,
+                isNightMode,
+                setNightMode: () => setNightMode(mode => !mode),
+              }}
             >
-              <Header
-                links={
-                  <HeaderLinks
-                    address={address}
-                    connected={connected}
-                    connectWallet={() => connectWallet(web3Modal)}
-                    disconnectWallet={() => disconnectWallet(web3, web3Modal)}
-                    isNightMode={isNightMode}
-                    setNightMode={() => setNightMode(!isNightMode)}
-                  />
-                }
-                isNightMode={isNightMode}
-                setNightMode={() => setNightMode(!isNightMode)}
-              />
-              <div className={classes.container}>
-                <div className={classes.children}>
-                  {Boolean(networkId === Number(process.env.REACT_APP_NETWORK_ID)) && children}
-                  <Notifier />
+              <div
+                style={{
+                  background: theme.palette.background.hue,
+                  backgroundColor: theme.palette.background.default,
+                }}
+              >
+                <Header />
+                <div className={classes.container}>
+                  <div className={classes.children}>
+                    {Boolean(networkId === Number(process.env.REACT_APP_NETWORK_ID)) && children}
+                    <Notifier />
+                  </div>
                 </div>
               </div>
-
-              {/* <Footer /> TODO: Implement when underlying links have been set up */}
-            </div>
+            </AppContext.Provider>
           </NetworksProvider>
         </SnackbarProvider>
       </ThemeProvider>

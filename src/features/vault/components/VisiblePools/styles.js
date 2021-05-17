@@ -1,7 +1,4 @@
 const styles = theme => ({
-  scroller: {
-    width: '100%',
-  },
   subtitle: {
     fontSize: '20px',
     letterSpacing: '0',

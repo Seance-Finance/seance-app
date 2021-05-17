@@ -1,14 +1,12 @@
 const styles = theme => ({
-  container: {
-    marginBottom: '24px',
-    border: '1px solid ' + theme.palette.background.border,
-  },
   accordion: {
-    width: '100%',
-    backgroundColor: theme.palette.background.primary,
+    backgroundColor: theme.palette.background.page,
   },
   divider: {
     margin: '0 30px',
+  },
+  paper: {
+    borderRadius: 24,
   },
 });
 
