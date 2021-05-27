@@ -9,29 +9,41 @@ const NetworksProvider = ({ children }) => {
 
   const networks = [
     {
-      name: 'BSC',
-      asset: 'BNB',
-      id: '56',
-      url: 'https://app.beefy.finance',
+      name: 'Fantom Opera',
+      asset: 'FANTOM',
+      id: '250',
+      url: 'https://app.seance.finance',
     },
-    {
-      name: 'HECO',
-      asset: 'HT',
-      id: '128',
-      url: 'https://heco.beefy.finance',
-    },
-    {
-      name: 'AVALANCHE',
-      asset: 'AVAX',
-      id: '43114',
-      url: 'https://avax.beefy.finance',
-    },
-    {
-      name: 'POLYGON',
-      asset: 'POLYGON',
-      id: '137',
-      url: 'https://polygon.beefy.finance',
-    },
+    // {
+    //   name: 'Fantom testnet',
+    //   asset: 'FANTOM',
+    //   id: '0xfa2',
+    //   url: 'https://app.seance.finance',
+    // }, -> Uncomment when developing on testnet
+    // {
+    //   name: 'BSC',
+    //   asset: 'BNB',
+    //   id: '56',
+    //   url: 'https://bsc.seance.finance',
+    // },
+    // {
+    //   name: 'HECO',
+    //   asset: 'HT',
+    //   id: '128',
+    //   url: 'https://heco.beefy.finance',
+    // },
+    // {
+    //   name: 'AVALANCHE',
+    //   asset: 'AVAX',
+    //   id: '43114',
+    //   url: 'https://avax.beefy.finance',
+    // },
+    // {
+    //   name: 'POLYGON',
+    //   asset: 'POLYGON',
+    //   id: '137',
+    //   url: 'https://polygon.beefy.finance',
+    // },
   ];
 
   const currentNetwork = useMemo(

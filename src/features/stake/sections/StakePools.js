@@ -30,20 +30,20 @@ export default function StakePools(props) {
   const [time, setTime] = React.useState(new Date());
 
   useEffect(() => {
-      const fetchEndPeriod = () => {
-        for (const key in pools) {
-          if (halfTime[key] === undefined || halfTime[key] === 0) {
-            fetchHalfTime(key);
-          }
+    const fetchEndPeriod = () => {
+      for (const key in pools) {
+        if (halfTime[key] === undefined || halfTime[key] === 0) {
+          fetchHalfTime(key);
         }
-      };
+      }
+    };
 
+    fetchEndPeriod();
+
+    const id = setInterval(() => {
       fetchEndPeriod();
-
-      const id = setInterval(() => {
-        fetchEndPeriod();
-      }, 10000);
-      return () => clearInterval(id);
+    }, 10000);
+    return () => clearInterval(id);
   }, [address, halfTime, fetchHalfTime, pools]);
 
   const [expanded, setExpanded] = React.useState('faq-1');
@@ -54,31 +54,31 @@ export default function StakePools(props) {
 
   useEffect(() => {
     const fetchCountdown = () => {
-        setTime(new Date());
-        let obj = {};
-        for (const key in pools) {
-          if (halfTime[key] === undefined) {
-            pools[key].countdown = pools[key].status === 'closed' ? t('Finished') : '';
-            continue;
-          }
-
-          if (halfTime[key] === '0') {
-            obj = { status: 'soon', countdown: t('Coming-Soon') };
-          } else {
-            const deadline = halfTime[key] * 1000;
-            const diff = deadline - time;
-
-            obj =
-              diff > 0
-                ? { status: 'active', countdown: formatCountdown(deadline) }
-                : { status: 'closed', countdown: t('Finished') };
-          }
-
-          if(!pools[key].hideCountdown === true) {
-            pools[key].status = obj.status;
-          }
-          pools[key].countdown = obj.countdown;
+      setTime(new Date());
+      let obj = {};
+      for (const key in pools) {
+        if (halfTime[key] === undefined) {
+          pools[key].countdown = pools[key].status === 'closed' ? t('Finished') : '';
+          continue;
         }
+
+        if (halfTime[key] === '0') {
+          obj = { status: 'soon', countdown: t('Coming-Soon') };
+        } else {
+          const deadline = halfTime[key] * 1000;
+          const diff = deadline - time;
+
+          obj =
+            diff > 0
+              ? { status: 'active', countdown: formatCountdown(deadline) }
+              : { status: 'closed', countdown: t('Finished') };
+        }
+
+        if (!pools[key].hideCountdown === true) {
+          pools[key].status = obj.status;
+        }
+        pools[key].countdown = obj.countdown;
+      }
     };
 
     const id = setInterval(() => {
@@ -100,7 +100,7 @@ export default function StakePools(props) {
           <img alt="Launchpool" src={require('images/stake/launchpool.png')} />
         </div>
       </Grid>
-      <Grid item xs={12} style={{paddingBottom: '20px', textAlign: 'right'}}>
+      <Grid item xs={12} style={{ paddingBottom: '20px', textAlign: 'right' }}>
         <ToggleButtonGroup value={showPools} exclusive onChange={handleShowPools}>
           <ToggleButton value="all">All</ToggleButton>
           <ToggleButton value="active">Live</ToggleButton>
@@ -110,7 +110,10 @@ export default function StakePools(props) {
       <Grid container spacing={4} justify={'center'}>
         {pools.map((pool, index) => (
           <React.Fragment key={index}>
-            {(showPools === 'all' || (showPools === 'active' && pools[index].status === showPools || showPools === 'active' && pools[index].status === 'soon') || showPools === 'closed' && pools[index].status === showPools) ? (
+            {showPools === 'all' ||
+            (showPools === 'active' && pools[index].status === showPools) ||
+            (showPools === 'active' && pools[index].status === 'soon') ||
+            (showPools === 'closed' && pools[index].status === showPools) ? (
               <Grid xs={12} sm={6} md={6} lg={3} key={index} item>
                 <Grid
                   className={[
@@ -123,7 +126,9 @@ export default function StakePools(props) {
                   ].join(' ')}
                 >
                   {pool.partnership ? (
-                    <Box className={classes.boosted}>{t('Stake-BoostedBy', { name: pool.name })}</Box>
+                    <Box className={classes.boosted}>
+                      {t('Stake-BoostedBy', { name: pool.name })}
+                    </Box>
                   ) : (
                     ''
                   )}
@@ -164,7 +169,9 @@ export default function StakePools(props) {
                   )}
                 </Grid>
               </Grid>
-            ) : ''}
+            ) : (
+              ''
+            )}
           </React.Fragment>
         ))}
       </Grid>
@@ -172,7 +179,7 @@ export default function StakePools(props) {
         <Grid className={classes.faq} item xs={12} lg={9}>
           <Accordion square expanded={expanded === 'faq-1'} onChange={handleChange('faq-1')}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>How do I use Beefy Launchpool?</Typography>
+              <Typography>How do I use Seance Launchpool?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -183,7 +190,7 @@ export default function StakePools(props) {
                 />
                 Look for a boosted partner Vault in our main app and stake the tokens that are asked
                 for in the vault. You will get a “receipt” called mooToken in your wallet. Proceed
-                to the related partner Launchpool vault here on the Beefy Launchpool site and enter
+                to the related partner Launchpool vault here on the Seance Launchpool site and enter
                 the corresponding vault (or press the shortcut on the main vault page called Boost).
                 The vault will ask for you to stake yourmooToken “receipts''. Stake these mooTokens
                 and you are all done, you can easily come back here and follow your earned partner
@@ -260,7 +267,7 @@ export default function StakePools(props) {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Once you stake in any of Beefy Finance vaults, you get in return something called
+                Once you stake in any of Seance Finance vaults, you get in return something called
                 mooTokens. These are different depending on the vault you participate in, this can
                 be called ‘mooBIFI’ or ‘mooAutoCake’. Basically, these are receipts for the funds
                 you deposited. They have no value, they’re just a way to show that you have a
@@ -275,9 +282,9 @@ export default function StakePools(props) {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Yes! These partner vaults are hosted by Beefy and are completely safe. Beefy has
+                Yes! These partner vaults are hosted by Seance and are completely safe. Seance has
                 gotten tokens from our partners and uses our own vaults for the reward. Those
-                mooTokens your stake doesn’t leave Beefy.
+                mooTokens your stake doesn’t leave Seance.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -305,9 +312,9 @@ export default function StakePools(props) {
             <AccordionDetails>
               <Typography>
                 That’s because APR and APY show two different things. APR means “Annual Percentage
-                Rate” and is a fixed rate. Beefy shows APR by dividing the annual yield into 365
+                Rate” and is a fixed rate. Seance shows APR by dividing the annual yield into 365
                 days and presents that to you as “Daily”. APY on the other hand means “Annual
-                percentage yield” which is when you take the daily yield and compound it. Beefy
+                percentage yield” which is when you take the daily yield and compound it. Seance
                 compounds your rewards automatically most of the time multiple times a day, this
                 makes the APY much higher than a yearly APR would be.
               </Typography>
@@ -335,12 +342,12 @@ export default function StakePools(props) {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                When partnering with a certain project, Beefy always tries to make an overall check
+                When partnering with a certain project, Seance always tries to make an overall check
                 of the project to get a sense of its sincerity and safety. Before adding vaults that
                 are hosted by the partnering project, we also try to look for vulnerabilities in the
                 code. Despite all this, we can never be 100% sure about a partner, hence it’s up to
                 you to make sure that the partnering project is a project that you want to support.
-                Beefy cannot, and will not take any responsibility for your personal actions.
+                Seance cannot, and will not take any responsibility for your personal actions.
               </Typography>
             </AccordionDetails>
           </Accordion>

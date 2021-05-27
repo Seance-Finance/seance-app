@@ -6,6 +6,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-end',
+    marginBottom: 16,
   },
   title: {
     fontSize: '32px',
@@ -18,17 +19,6 @@ const styles = theme => ({
   },
   titleLoader: {
     marginLeft: '12px',
-  },
-  subtitle: {
-    fontSize: '14px',
-    letterSpacing: '0',
-    lineHeight: '8px',
-    [theme.breakpoints.down('xs')]: {
-      lineHeight: '16px',
-    },
-    fontWeight: '550',
-    color: theme.palette.text.secondary,
-    marginTop: '0',
   },
   text: {
     fontSize: '24px',

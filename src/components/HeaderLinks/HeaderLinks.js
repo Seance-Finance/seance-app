@@ -137,7 +137,7 @@ const HeaderLinks = ({
             // TODO: more translations
             { divider: true },
             <a
-              href="https://github.com/beefyfinance/beefy-app/tree/master/src/locales"
+              href="https://github.com/seance-finance/seance-app/tree/master/src/locales"
               target="_blank"
               rel="noopener noreferrer"
               className={classes.cta}

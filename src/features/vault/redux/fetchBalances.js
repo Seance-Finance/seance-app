@@ -5,13 +5,11 @@ import {
   VAULT_FETCH_BALANCES_SUCCESS,
   VAULT_FETCH_BALANCES_FAILURE,
 } from './constants';
-import { MultiCall } from 'eth-multicall';
-import { erc20ABI, multicallBnbShimABI } from 'features/configure';
+import { erc20ABI } from 'features/configure';
 import BigNumber from 'bignumber.js';
-import { getNetworkMulticall } from 'features/helpers/getNetworkData';
 
 export function fetchBalances({ address, web3, tokens }) {
-  return dispatch => {
+  return async dispatch => {
     dispatch({
       type: VAULT_FETCH_BALANCES_BEGIN,
     });
@@ -26,31 +24,19 @@ export function fetchBalances({ address, web3, tokens }) {
         });
       }
 
-      const multicall = new MultiCall(web3, getNetworkMulticall());
-
-      const calls = tokensList.map(token => {
-        if (!token.tokenAddress) {
-          const shimAddress = '0xC72E5edaE5D7bA628A2Acb39C8Aa0dbbD06daacF';
-          const shimContract = new web3.eth.Contract(multicallBnbShimABI, shimAddress);
-          return {
-            tokenBalance: shimContract.methods.balanceOf(address),
-          };
-        } else {
-          const tokenContract = new web3.eth.Contract(erc20ABI, token.tokenAddress);
-          return {
-            tokenBalance: tokenContract.methods.balanceOf(address),
-          };
-        }
-      });
-
-      multicall
-        .all([calls])
-        .then(([results]) => {
+      Promise.all(
+        tokensList.map(async token => {
+          const tokenContract = await new web3.eth.Contract(erc20ABI, token.tokenAddress);
+          const tokenBalance = await tokenContract.methods.balanceOf(address).call();
+          return { tokenBalance };
+        })
+      ).then(result => {
+        try {
           const newTokens = {};
           for (let i = 0; i < tokensList.length; i++) {
             newTokens[tokensList[i].token] = {
               tokenAddress: tokensList[i].tokenAddress,
-              tokenBalance: new BigNumber(results[i].tokenBalance).toNumber() || 0,
+              tokenBalance: new BigNumber(result[i].tokenBalance).toNumber() || 0,
             };
           }
 
@@ -59,13 +45,13 @@ export function fetchBalances({ address, web3, tokens }) {
             data: newTokens,
           });
           resolve();
-        })
-        .catch(error => {
+        } catch (error) {
           dispatch({
             type: VAULT_FETCH_BALANCES_FAILURE,
           });
-          return reject(error.message || error);
-        });
+          reject(error.message || error);
+        }
+      });
     });
 
     return promise;

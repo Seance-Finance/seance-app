@@ -1,25 +1,23 @@
-const styles = (theme) => ({
+const styles = theme => ({
   details: {
     display: 'flex',
     alignItems: 'center',
-    background: theme.palette.background.primary,
   },
-  detailsPaused: {
+  container: {
+    padding: '20px 0',
+  },
+  section: {
+    backgroundColor: theme.palette.background.section,
+    border: '1px solid ' + theme.palette.background.border,
+    padding: 26,
+    width: '100%',
+    borderRadius: 20,
     display: 'flex',
     alignItems: 'center',
-    background: theme.palette.background.paused,
+    justifyContent: 'center',
+    marginBottom: 12,
   },
-  detailsRetired: {
-    display: 'flex',
-    alignItems: 'center',
-    background: theme.palette.background.retired,
-  },
-  mobilePadding: {
-    paddingTop: '20px',
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: 0,
-    },
-  },
+  expandIcon: { margin: '12px 0 -12px 0' },
 });
 
 export default styles;

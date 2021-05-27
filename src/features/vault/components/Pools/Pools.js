@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import TVLLoader from './TVLLoader/TVLLoader';
-import NetworksToggle from 'components/NetworksToggle/NetworksToggle';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import { useFetchBalances, useFetchVaultsData, useFetchApys } from '../../redux/hooks';
 import VisiblePools from '../VisiblePools/VisiblePools';
@@ -50,19 +49,10 @@ export default function Pools() {
 
   return (
     <Grid container className={classes.container}>
-      <Grid item xs={6}>
-        <h1 className={classes.title}>{t('Vault-Network')}</h1>
-        <NetworksToggle />
-      </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12}>
         <div className={classes.tvl}>
           <span className={classes.title}>
-            TVL{' '}
-            {fetchVaultsDataDone && poolsTvl > 0 ? (
-              formatGlobalTvl(poolsTvl)
-            ) : (
-              <TVLLoader className={classes.titleLoader} />
-            )}
+            TVL {fetchVaultsDataDone && formatGlobalTvl(poolsTvl)}
           </span>
 
           <span className={classes.text}>
@@ -73,9 +63,6 @@ export default function Pools() {
               <TVLLoader className={classes.titleLoader} />
             )}
           </span>
-          <h3 className={classes.subtitle} style={{ marginTop: '24px' }}>
-            {t('Vault-WithdrawFee')}
-          </h3>
         </div>
       </Grid>
 

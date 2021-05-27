@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <div className={classes.root}>
       <div className={classes.column}>
-        <div className={classes.title}>beefy.finance</div>
+        <div className={classes.title}>seance.finance</div>
         <a
           href="https://docs.beefy.finance"
           target="_blank"
@@ -35,7 +35,7 @@ const Footer = () => {
         </a>
 
         <a
-          href="https://github.com/beefyfinance"
+          href="https://github.com/Seance-Finance/seance-app"
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
