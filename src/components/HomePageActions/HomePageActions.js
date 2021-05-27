@@ -98,7 +98,7 @@ const HomePageActions = () => {
           <List>
             <ListItem className={classes.listItem}>
               {renderLink(
-                'https://cebollallobec.gitbook.io/seance-finance/', // TODO: change
+                'https://docs.seance.finance/', // TODO: change
                 'Docs',
                 'fas fa-book'
               )}
